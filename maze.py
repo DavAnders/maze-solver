@@ -104,11 +104,10 @@ class Maze:
         # Mark the current cell as visited
         self._cells[i][j].visited = True
 
-        # If we are at the end cell, we are done!
+        # If we are at the end cell, we are done
         if i == self._num_rows - 1 and j == self._num_cols - 1:
             return True
 
-        # Define the possible movements
         movements = {
             'left': (0, -1, 'has_left_wall'),
             'right': (0, 1, 'has_right_wall'),
@@ -119,8 +118,6 @@ class Maze:
         # Try each possible movement
         for direction, (di, dj, wall_attr) in movements.items():
             ni, nj = i + di, j + dj
-
-            # Check if the new position is within bounds
             if 0 <= ni < self._num_rows and 0 <= nj < self._num_cols:
                 # Check if there is no wall blocking the way to the new cell
                 # and it hasn't been visited
@@ -130,10 +127,10 @@ class Maze:
                     
                     # Recursively attempt to solve from the new cell
                     if self._solve_r(ni, nj):
-                        return True  # Found the end, so return True
+                        return True  # Found end
                         
-                    # If moving to new cell didn't solve the maze, undo the move
+                    # If moving to new cell didn't solve the maze, undo move
                     self._cells[i][j].draw_move(self._cells[ni][nj], undo=True)
 
-        # None of the directions worked out, this path is a dead-end
+        # None of the directions worked out
         return False
